@@ -12,4 +12,12 @@ routes.get('/users', (request, response) => {
   return response.json(users);
 });
 
+routes.post('/users', (request, response) => {
+  const newUser = request.body;
+  
+  users.push(newUser);
+  
+  response.status(201).send('User created successfully');
+});
+
 export default routes;
