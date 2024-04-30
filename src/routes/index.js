@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 const routes = new Router();
 
-const users = [
+let users = [
   { id: 1, name: 'Alice' },
   { id: 2, name: 'Bob' },
   { id: 3, name: 'Charlie' }
@@ -32,6 +32,14 @@ routes.put('/users/:id', (request, response) => {
   } else {
     response.status(404).json({ message: 'User not found' });
   }
+});
+
+routes.delete('/users/:id', (request, response) => {
+  const id = parseInt(request.params.id);
+  
+  users = users.filter(user => user.id !== id);
+  
+  response.status(204).send();
 });
 
 export default routes;
