@@ -42,4 +42,18 @@ routes.delete('/users/:id', (request, response) => {
   response.status(204).send();
 });
 
+routes.patch('/users/:id', (request, response) => {
+  const id = parseInt(request.params.id);
+  const updateFields = request.body;
+
+  const index = users.findIndex(user => user.id === id);
+  
+  if (index !== -1) {
+    users[index] = { ...users[index], ...updateFields };
+    response.status(200).json(users);
+  } else {
+    response.status(404).json({ message: 'User not found' });
+  }
+});
+
 export default routes;
