@@ -20,4 +20,18 @@ routes.post('/users', (request, response) => {
   response.status(201).send('User created successfully');
 });
 
+routes.put('/users/:id', (request, response) => {
+  const id = parseInt(request.params.id);
+  const data = request.body;
+  
+  const index = users.findIndex(user => user.id === id);
+  
+  if (index !== -1) {
+    users[index] = { ...users[index], ...data };
+    response.status(200).json(users);
+  } else {
+    response.status(404).json({ message: 'User not found' });
+  }
+});
+
 export default routes;
