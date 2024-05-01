@@ -105,4 +105,18 @@ routes.proppatch('/resource', (request, response) => {
   response.status(200).json(resourceProperties);
 });
 
+const resourceLocks = new Map();
+
+routes.lock('/resource', (request, response) => {
+  const { resource, owner } = request.body;
+
+  if (resourceLocks.has(resource)) {
+    response.status(409).json({ message: 'Resource is already locked'});
+  } else {
+    resourceLocks.set(resource, { owner });
+
+    response.status(200).json({ message: 'Resource locked successfully'});
+  }
+});
+
 export default routes;
