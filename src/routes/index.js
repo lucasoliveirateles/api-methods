@@ -1,3 +1,4 @@
+import net from 'net';
 import { Router } from 'express';
 
 const routes = new Router();
@@ -57,11 +58,21 @@ routes.patch('/users/:id', (request, response) => {
 });
 
 routes.options('/http', (request, response) => {
-  response.setHeader('Allow', 'GET, POST, PUT, DELETE', 'PATCH');
+  response.setHeader('Allow', 'GET, POST, PUT, DELETE', 'PATCH', 'COPY');
   
   response.setHeader('Access-Control-Allow-Origin', '*');
 
   response.status(204).send();
+});
+
+let resource = 'Original content';
+
+routes.copy('/resource', (request, response) => {
+  const copiedResource = resource;
+
+  response.status(200).json({ 
+    message: `Resource copied successfully: ${copiedResource}`
+  });
 });
 
 export default routes;
