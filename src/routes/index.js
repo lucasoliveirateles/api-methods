@@ -91,4 +91,18 @@ routes.head('/resource', (request, response) => {
   response.end();
 });
 
+let resourceProperties = {
+  name: 'Sample Resource',
+  description: 'This is a sample resource for demonstration purposes.'
+};
+
+routes.proppatch('/resource', (request, response) => {
+  const { name, description } = request.body;
+
+  if (name) resourceProperties.name = name;
+  if (description) resourceProperties.description = description;
+
+  response.status(200).json(resourceProperties);
+});
+
 export default routes;
