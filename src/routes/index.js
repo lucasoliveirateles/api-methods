@@ -75,4 +75,20 @@ routes.copy('/resource', (request, response) => {
   });
 });
 
+const resourceData = {
+  id: 1,
+  name: 'Example Resource',
+  description: 'This is a sample resource for demonstration purposes.'
+};
+
+routes.head('/resource', (request, response) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    'Content-Length': JSON.stringify(resourceData).length
+  };
+
+  response.writeHead(200, headers);
+  response.end();
+});
+
 export default routes;
