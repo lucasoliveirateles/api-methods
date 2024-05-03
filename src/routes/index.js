@@ -119,4 +119,18 @@ routes.lock('/resource', (request, response) => {
   }
 });
 
+const resourceLocks2 = new Map();
+
+routes.unlock('/resource', (request, response) => {
+  const { resource } = request.body;
+
+  if (!resourceLocks2.has(resource)) {
+    response.status(409).json({ message: 'Resource is not locked' });
+  } else {
+    resourceLocks2.delete(resource);
+
+    response.status(200).json({ message: 'Resource unlocked successfully' });
+  }
+});
+
 export default routes;
