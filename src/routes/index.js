@@ -14,11 +14,11 @@ routes.get('/users', (request, response) => {
 });
 
 routes.post('/users', (request, response) => {
-  const newUser = request.body;
+  const data = request.body;
   
-  users.push(newUser);
+  users.push(data);
   
-  response.status(201).send('User created successfully');
+  response.status(200).json(data);
 });
 
 routes.put('/users/:id', (request, response) => {
