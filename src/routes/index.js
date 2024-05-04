@@ -58,7 +58,7 @@ routes.patch('/users/:id', (request, response) => {
 
 routes.options('/http', (request, response) => {
   response.setHeader(
-    'Allow', 'GET, POST, PUT, DELETE, PATCH, COPY, HEAD, PROPPATCH, LOCK, UNLOCK, REPORT' 
+    'Allow', 'GET, POST, PUT, DELETE, PATCH, COPY, HEAD, PROPPATCH, LOCK, UNLOCK, REPORT, PROPFIND' 
   );
   
   response.setHeader('Access-Control-Allow-Origin', '*');
@@ -96,6 +96,20 @@ let resourceProperties = {
   name: 'Sample Resource',
   description: 'This is a sample resource for demonstration purposes.'
 };
+
+routes.propfind('/resource', (request, response) => {
+  const { properties } = request.body;
+
+  const requestedProperties = {};
+
+  properties.forEach(property => {
+    if (resourceProperties[property]) {
+      requestedProperties[property] = resourceProperties[property];
+    }
+  });
+
+  response.status(200).json(requestedProperties);
+});
 
 routes.proppatch('/resource', (request, response) => {
   const { name, description } = request.body;
