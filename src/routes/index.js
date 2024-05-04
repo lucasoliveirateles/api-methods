@@ -58,7 +58,9 @@ routes.patch('/users/:id', (request, response) => {
 });
 
 routes.options('/http', (request, response) => {
-  response.setHeader('Allow', 'GET, POST, PUT, DELETE', 'PATCH', 'COPY');
+  response.setHeader(
+    'Allow', 'GET, POST, PUT, DELETE, PATCH, COPY, HEAD, PROPPATCH, LOCK, UNLOCK, REPORT' 
+  );
   
   response.setHeader('Access-Control-Allow-Origin', '*');
 
