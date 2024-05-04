@@ -59,7 +59,7 @@ routes.patch('/users/:id', (request, response) => {
 
 routes.options('/http', (request, response) => {
   response.setHeader(
-    'Allow', 'GET, POST, PUT, DELETE, PATCH, COPY, HEAD, PROPPATCH, LOCK, UNLOCK, REPORT, PROPFIND, MKCOL' 
+    'Allow', 'GET, POST, PUT, DELETE, PATCH, COPY, HEAD, PROPPATCH, LOCK, UNLOCK, REPORT, PROPFIND, MKCOL, MKACTIVITY' 
   );
   
   response.setHeader('Access-Control-Allow-Origin', '*');
@@ -178,6 +178,22 @@ routes.mkcol('/collection', async (request, response) => {
       response.status(500).json({ message: 'Internal Server Error'});
     }
   }
+});
+
+let activities = [];
+
+routes.mkactivity('/activities', (request, response) => {
+  const { name, description } = request.body;
+
+  const activity = {
+    id: activities.length + 1,
+    name,
+    description
+  };
+
+  activities.push(activity);
+
+  response.status(200).json(activity);
 });
 
 
