@@ -1,3 +1,4 @@
+import fs from 'fs';
 import { Router } from 'express';
 
 const routes = new Router();
@@ -58,7 +59,7 @@ routes.patch('/users/:id', (request, response) => {
 
 routes.options('/http', (request, response) => {
   response.setHeader(
-    'Allow', 'GET, POST, PUT, DELETE, PATCH, COPY, HEAD, PROPPATCH, LOCK, UNLOCK, REPORT, PROPFIND' 
+    'Allow', 'GET, POST, PUT, DELETE, PATCH, COPY, HEAD, PROPPATCH, LOCK, UNLOCK, REPORT, PROPFIND, MKCOL' 
   );
   
   response.setHeader('Access-Control-Allow-Origin', '*');
@@ -159,6 +160,24 @@ routes.report('/resource', (request, response) => {
   };
 
   response.status(200).json(data);
+});
+
+routes.mkcol('/collection', async (request, response) => {
+  try {
+    const collectionPath = './collections/collection';
+
+    await fs.access(collectionPath);
+
+    response.status(409).json({ message: 'Collection already exists'});
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      await fs.mkdir(collectionPath);
+
+      response.status(200).json({ message: 'Collection created successfully' });
+    } else {
+      response.status(500).json({ message: 'Internal Server Error'});
+    }
+  }
 });
 
 
