@@ -133,4 +133,18 @@ routes.unlock('/resource', (request, response) => {
   }
 });
 
+routes.report('/resource', (request, response) => {
+  const data = {
+    resource: '/resource',
+    reportType: 'Example Report',
+    data: {
+      totalItems: 10,
+      averageSize: '1 MB',
+    }
+  };
+
+  response.status(200).json(data);
+});
+
+
 export default routes;
