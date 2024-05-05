@@ -59,7 +59,7 @@ routes.patch('/users/:id', (request, response) => {
 
 routes.options('/http', (request, response) => {
   response.setHeader(
-    'Allow', 'GET, POST, PUT, DELETE, PATCH, COPY, HEAD, PROPPATCH, LOCK, UNLOCK, REPORT, PROPFIND, MKCOL, MKACTIVITY, CHECKOUT, MOVE' 
+    'Allow', 'GET, POST, PUT, DELETE, PATCH, COPY, HEAD, PROPPATCH, LOCK, UNLOCK, REPORT, PROPFIND, MKCOL, MKACTIVITY, CHECKOUT, MOVE, MERGE' 
   );
   
   response.setHeader('Access-Control-Allow-Origin', '*');
@@ -228,5 +228,40 @@ routes.move('/resource', async (request, response) => {
     }
   }
 });
+
+let resourceData2 = {
+  content: 'Initial content',
+  version: 1
+};
+
+// Define a route handler for the MERGE method
+routes.merge('/resource', (request, response) => {
+  try {
+    const { changes } = request.body;
+
+    applyChanges(resourceData2, changes);
+
+    resourceData2.version++;
+
+    response.status(200).json(resourceData2);
+  } catch (error) {
+    console.error('Error:', error);
+    response.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+function applyChanges(resource, changes) {
+  changes.forEach(change => {
+    if (change.type === 'insert') {
+      const { position, text } = change;
+      
+      resource.content = resource.content.slice(0, position) + text + resource.content.slice(position);
+    } else if (change.type === 'delete') {
+      const { start, end } = change;
+      
+      resource.content = resource.content.slice(0, start) + resource.content.slice(end);
+    }
+  });
+}
 
 export default routes;
