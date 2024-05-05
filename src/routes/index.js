@@ -59,7 +59,7 @@ routes.patch('/users/:id', (request, response) => {
 
 routes.options('/http', (request, response) => {
   response.setHeader(
-    'Allow', 'GET, POST, PUT, DELETE, PATCH, COPY, HEAD, PROPPATCH, LOCK, UNLOCK, REPORT, PROPFIND, MKCOL, MKACTIVITY, CHECKOUT, MOVE, MERGE' 
+    'Allow', 'GET, POST, PUT, DELETE, PATCH, COPY, HEAD, PROPPATCH, LOCK, UNLOCK, REPORT, PROPFIND, MKCOL, MKACTIVITY, CHECKOUT, MOVE, MERGE, TRACE' 
   );
   
   response.setHeader('Access-Control-Allow-Origin', '*');
@@ -263,5 +263,21 @@ function applyChanges(resource, changes) {
     }
   });
 }
+
+routes.trace('/trace', (request, response) => {
+  const headers = request.headers;
+  const body = request.body;
+
+  const responseText = `
+      TRACE Request Received:
+      =======================
+      Request Method: ${request.method}
+      Request URL: ${request.originalUrl}
+      Request Headers: ${JSON.stringify(headers, null, 2)}
+      Request Body: ${JSON.stringify(body, null, 2)}
+  `;
+
+  response.status(200).send(responseText);
+});
 
 export default routes;
