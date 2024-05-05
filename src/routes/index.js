@@ -59,7 +59,7 @@ routes.patch('/users/:id', (request, response) => {
 
 routes.options('/http', (request, response) => {
   response.setHeader(
-    'Allow', 'GET, POST, PUT, DELETE, PATCH, COPY, HEAD, PROPPATCH, LOCK, UNLOCK, REPORT, PROPFIND, MKCOL, MKACTIVITY' 
+    'Allow', 'GET, POST, PUT, DELETE, PATCH, COPY, HEAD, PROPPATCH, LOCK, UNLOCK, REPORT, PROPFIND, MKCOL, MKACTIVITY, CHECKOUT' 
   );
   
   response.setHeader('Access-Control-Allow-Origin', '*');
@@ -196,5 +196,18 @@ routes.mkactivity('/activities', (request, response) => {
   response.status(200).json(activity);
 });
 
+const checkedOutResources = new Set();
+
+routes.checkout('/resource', (request, response) => {
+  const resourceId = request.params.resourceId;
+
+  if (checkedOutResources.has(resourceId)) {
+    response.status(409).json({ message: 'Resource is already checked out' });
+  } else {
+    checkedOutResources.add(resourceId);
+
+    response.status(200).json({ message: 'Resource checked out successfully' });
+  }
+});
 
 export default routes;
