@@ -59,7 +59,7 @@ routes.patch('/users/:id', (request, response) => {
 
 routes.options('/http', (request, response) => {
   response.setHeader(
-    'Allow', 'GET, POST, PUT, DELETE, PATCH, COPY, HEAD, PROPPATCH, LOCK, UNLOCK, REPORT, PROPFIND, MKCOL, MKACTIVITY, CHECKOUT' 
+    'Allow', 'GET, POST, PUT, DELETE, PATCH, COPY, HEAD, PROPPATCH, LOCK, UNLOCK, REPORT, PROPFIND, MKCOL, MKACTIVITY, CHECKOUT, MOVE' 
   );
   
   response.setHeader('Access-Control-Allow-Origin', '*');
@@ -207,6 +207,25 @@ routes.checkout('/resource', (request, response) => {
     checkedOutResources.add(resourceId);
 
     response.status(200).json({ message: 'Resource checked out successfully' });
+  }
+});
+
+routes.move('/resource', async (request, response) => {
+  try {
+    const sourcePath = './source/resource.txt';
+    const destinationPath = './destination/resource.txt';
+
+    await fs.access(sourcePath);
+
+    await fs.rename(sourcePath, destinationPath);
+
+    response.status(200).json({ message: 'Resource moved successfully' });
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      response.status(404).json({ message: 'Source resource not found' });
+    } else {
+      response.status(500).json({ message: 'Internal Server Error' });
+    }
   }
 });
 
