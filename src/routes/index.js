@@ -280,39 +280,29 @@ routes.trace('/trace', (request, response) => {
   response.status(200).send(responseText);
 });
 
-routes.notify('/notify', (req, res) => {
-  // Extract notification data from the request body
-  const { message } = req.body;
+routes.notify('/notify', (request, response) => {
+  const { message } = request.body;
 
-  // Here, you would send the notification to the client
-  // This is just a hypothetical example
   sendNotificationToClient(message);
 
-  // Send a success response
-  res.status(200).send('Notification sent');
+  response.status(200).json({ message: 'Notification sent' });
 });
 
 function sendNotificationToClient(message) {
   console.log('Sending notification:', message);
-  // In a real application, you would send the notification to the client
 }
 
-// Define a route handler for the LINK method to associate a tag with a blog post
-routes.link('/posts/:postId/tags/:tagId', (req, res) => {
-  const postId = req.params.postId;
-  const tagId = req.params.tagId;
+routes.link('/posts/:postId/tags/:tagId', (request, response) => {
+  const postId = request.params.postId;
+  const tagId = request.params.tagId;
 
-  // Here, you would associate the tag with the blog post
   associateTagWithPost(postId, tagId);
 
-  // Send a success response
-  res.status(200).send('Tag associated with post successfully');
+  response.status(200).json({ message: 'Tag associated with post successfully' });
 });
 
-// Function to simulate associating a tag with a blog post
 function associateTagWithPost(postId, tagId) {
   console.log(`Associating tag ${tagId} with post ${postId}`);
-  // In a real application, you would perform the actual operation to associate the tag with the blog post
 }
 
 routes.unlink('/posts/:postId/tags/:tagId', (resquest, response) => {
@@ -321,7 +311,7 @@ routes.unlink('/posts/:postId/tags/:tagId', (resquest, response) => {
 
   unlinkResources(postId, tagId);
 
-  response.status(200).send('Tag not associate with post successfully');
+  response.status(200).json({ message: 'Tag not associate with post successfully' });
 });
 
 function unlinkResources(postId, tagId) {
