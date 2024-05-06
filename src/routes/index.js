@@ -59,7 +59,7 @@ routes.patch('/users/:id', (request, response) => {
 
 routes.options('/http', (request, response) => {
   response.setHeader(
-    'Allow', 'GET, POST, PUT, DELETE, PATCH, COPY, HEAD, PROPPATCH, LOCK, UNLOCK, REPORT, PROPFIND, MKCOL, MKACTIVITY, CHECKOUT, MOVE, MERGE, TRACE' 
+    'Allow', 'GET, POST, PUT, DELETE, PATCH, COPY, HEAD, PROPPATCH, LOCK, UNLOCK, REPORT, PROPFIND, MKCOL, MKACTIVITY, CHECKOUT, MOVE, MERGE, TRACE, CONNECT, NOTIFY' 
   );
   
   response.setHeader('Access-Control-Allow-Origin', '*');
@@ -279,5 +279,22 @@ routes.trace('/trace', (request, response) => {
 
   response.status(200).send(responseText);
 });
+
+routes.notify('/notify', (req, res) => {
+  // Extract notification data from the request body
+  const { message } = req.body;
+
+  // Here, you would send the notification to the client
+  // This is just a hypothetical example
+  sendNotificationToClient(message);
+
+  // Send a success response
+  res.status(200).send('Notification sent');
+});
+
+function sendNotificationToClient(message) {
+  console.log('Sending notification:', message);
+  // In a real application, you would send the notification to the client
+}
 
 export default routes;
