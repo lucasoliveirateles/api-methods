@@ -315,4 +315,17 @@ function associateTagWithPost(postId, tagId) {
   // In a real application, you would perform the actual operation to associate the tag with the blog post
 }
 
+routes.unlink('/posts/:postId/tags/:tagId', (resquest, response) => {
+  const postId = resquest.params.postId;
+  const tagId = resquest.params.tagId;
+
+  unlinkResources(postId, tagId);
+
+  response.status(200).send('Tag not associate with post successfully');
+});
+
+function unlinkResources(postId, tagId) {
+  console.log(`Removing link between ${postId} and ${tagId}`);
+}
+
 export default routes;
