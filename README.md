@@ -37,3 +37,31 @@ But there are other methods that can be used, these are:
 * **OPTIONS**: This method is used to describe the communication options for the target resource. It allows the client to determine the communication options available for a particular resource or the server as a whole.
 
 * **HEAD**: Similar to GET, but it only requests the headers of the resource without the body. It's often used to check for the existence of a resource or to retrieve metadata about it.
+
+* **TRACE**: TRACE allows a client to see what changes or additions have been made to a resource during its traversal across the network to the server.
+
+* **PROPFIND**: PROPFIND is used to retrieve properties, such as metadata, of a specified resource.
+
+* **PROPPATCH**: PROPPATCH is used to update or set properties of a specified resource.
+
+* **MKCOL**: MKCOL is used to create a new collection (e.g., a directory) at the specified URL.
+
+* **COPY**: COPY is used to copy a resource from one location to another.
+
+* **MOVE**: MOVE is used to move a resource from one location to another.
+
+* **LOCK**: LOCK is used to lock a resource, typically to prevent other users from modifying it.
+
+* **UNLOCK**: UNLOCK is used to unlock a previously locked resource.
+
+* **MKACTIVITY**: MKACTIVITY is used to create a new activity within a version-controlled resource.
+
+* **CHECKOUT**: CHECKOUT is used to create a working copy of a version-controlled resource.
+
+* **MERGE**: MERGE is used to apply changes from one branch to another in a version-controlled resource.
+
+* **NOTIFY**: NOTIFY is used in the context of Web Push to request updates from a server.
+
+* **LINK**: LINK is used to establish one or more links between resources.
+
+* **UNLINK**: UNLINK is used to remove one or more links between resources.
