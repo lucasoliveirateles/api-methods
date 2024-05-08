@@ -32,4 +32,6 @@ Here's a description of some commonly used HTTP methods:
 
 But there are other methods that can be used, these are:
 
+* **PATCH**: The PATCH method is used to apply partial modifications to a resource. It's typically used when you want to apply only a part of the modifications supported by PUT.
+
 * **OPTIONS**: This method is used to describe the communication options for the target resource. It allows the client to determine the communication options available for a particular resource or the server as a whole.
