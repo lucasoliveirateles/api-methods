@@ -10,7 +10,7 @@ let users = [
 ];
 
 routes.get('/users', (request, response) => {
-  return response.json(users);
+  response.json(users);
 });
 
 routes.post('/users', (request, response) => {
@@ -29,9 +29,10 @@ routes.put('/users/:id', (request, response) => {
   
   if (index !== -1) {
     users[index] = { ...users[index], ...data };
+
     response.status(200).json(users);
   } else {
-    response.status(404).json({ message: 'User not found' });
+    response.status(404).json({ message: 'user not found' });
   }
 });
 
@@ -51,15 +52,16 @@ routes.patch('/users/:id', (request, response) => {
   
   if (index !== -1) {
     users[index] = { ...users[index], ...updateFields };
+
     response.status(200).json(users);
   } else {
-    response.status(404).json({ message: 'User not found' });
+    response.status(404).json({ message: 'user not found' });
   }
 });
 
 routes.options('/http', (request, response) => {
   response.setHeader(
-    'Allow', 'GET, POST, PUT, DELETE, PATCH, COPY, HEAD, PROPPATCH, LOCK, UNLOCK, REPORT, PROPFIND, MKCOL, MKACTIVITY, CHECKOUT, MOVE, MERGE, TRACE, CONNECT, NOTIFY' 
+    'Allow', 'GET, POST, PUT, DELETE, PATCH, COPY, HEAD, PROPPATCH, LOCK, UNLOCK, REPORT, PROPFIND, MKCOL, MKACTIVITY, CHECKOUT, MOVE, MERGE, TRACE, NOTIFY' 
   );
   
   response.setHeader('Access-Control-Allow-Origin', '*');
@@ -73,7 +75,7 @@ routes.copy('/resource', (request, response) => {
   const copiedResource = resource;
 
   response.status(200).json({ 
-    message: `Resource copied successfully: ${copiedResource}`
+    message: `resource copied successfully: ${copiedResource}`
   });
 });
 
@@ -127,11 +129,11 @@ routes.lock('/resource', (request, response) => {
   const { resource, owner } = request.body;
 
   if (resourceLocks.has(resource)) {
-    response.status(409).json({ message: 'Resource is already locked'});
+    response.status(409).json({ message: 'resource is already locked'});
   } else {
     resourceLocks.set(resource, { owner });
 
-    response.status(200).json({ message: 'Resource locked successfully'});
+    response.status(200).json({ message: 'resource locked successfully'});
   }
 });
 
@@ -141,11 +143,11 @@ routes.unlock('/resource', (request, response) => {
   const { resource } = request.body;
 
   if (!resourceLocks2.has(resource)) {
-    response.status(409).json({ message: 'Resource is not locked' });
+    response.status(409).json({ message: 'resource is not locked' });
   } else {
     resourceLocks2.delete(resource);
 
-    response.status(200).json({ message: 'Resource unlocked successfully' });
+    response.status(200).json({ message: 'resource unlocked successfully' });
   }
 });
 
@@ -168,14 +170,14 @@ routes.mkcol('/collection', async (request, response) => {
 
     await fs.access(collectionPath);
 
-    response.status(409).json({ message: 'Collection already exists'});
+    response.status(409).json({ message: 'collection already exists'});
   } catch (error) {
     if (error.code === 'ENOENT') {
       await fs.mkdir(collectionPath);
 
-      response.status(200).json({ message: 'Collection created successfully' });
+      response.status(200).json({ message: 'collection created successfully' });
     } else {
-      response.status(500).json({ message: 'Internal Server Error'});
+      response.status(500).json({ message: 'internal server error'});
     }
   }
 });
@@ -202,11 +204,11 @@ routes.checkout('/resource', (request, response) => {
   const resourceId = request.params.resourceId;
 
   if (checkedOutResources.has(resourceId)) {
-    response.status(409).json({ message: 'Resource is already checked out' });
+    response.status(409).json({ message: 'resource is already checked out' });
   } else {
     checkedOutResources.add(resourceId);
 
-    response.status(200).json({ message: 'Resource checked out successfully' });
+    response.status(200).json({ message: 'resource checked out successfully' });
   }
 });
 
@@ -219,12 +221,12 @@ routes.move('/resource', async (request, response) => {
 
     await fs.rename(sourcePath, destinationPath);
 
-    response.status(200).json({ message: 'Resource moved successfully' });
+    response.status(200).json({ message: 'resource moved successfully' });
   } catch (error) {
     if (error.code === 'ENOENT') {
-      response.status(404).json({ message: 'Source resource not found' });
+      response.status(404).json({ message: 'source resource not found' });
     } else {
-      response.status(500).json({ message: 'Internal Server Error' });
+      response.status(500).json({ message: 'internal server error' });
     }
   }
 });
@@ -234,7 +236,6 @@ let resourceData2 = {
   version: 1
 };
 
-// Define a route handler for the MERGE method
 routes.merge('/resource', (request, response) => {
   try {
     const { changes } = request.body;
@@ -246,7 +247,7 @@ routes.merge('/resource', (request, response) => {
     response.status(200).json(resourceData2);
   } catch (error) {
     console.error('Error:', error);
-    response.status(500).json({ message: 'Internal Server Error' });
+    response.status(500).json({ message: 'internal server error' });
   }
 });
 
@@ -285,7 +286,7 @@ routes.notify('/notify', (request, response) => {
 
   sendNotificationToClient(message);
 
-  response.status(200).json({ message: 'Notification sent' });
+  response.status(200).json({ message: 'notification sent' });
 });
 
 function sendNotificationToClient(message) {
@@ -298,7 +299,7 @@ routes.link('/posts/:postId/tags/:tagId', (request, response) => {
 
   associateTagWithPost(postId, tagId);
 
-  response.status(200).json({ message: 'Tag associated with post successfully' });
+  response.status(200).json({ message: 'tag associated with post successfully' });
 });
 
 function associateTagWithPost(postId, tagId) {
@@ -311,7 +312,7 @@ routes.unlink('/posts/:postId/tags/:tagId', (resquest, response) => {
 
   unlinkResources(postId, tagId);
 
-  response.status(200).json({ message: 'Tag not associate with post successfully' });
+  response.status(200).json({ message: 'tag not associate with post successfully' });
 });
 
 function unlinkResources(postId, tagId) {
