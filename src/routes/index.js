@@ -269,16 +269,14 @@ routes.trace('/trace', (request, response) => {
   const headers = request.headers;
   const body = request.body;
 
-  const responseText = `
-      TRACE Request Received:
-      =======================
-      Request Method: ${request.method}
-      Request URL: ${request.originalUrl}
-      Request Headers: ${JSON.stringify(headers, null, 2)}
-      Request Body: ${JSON.stringify(body, null, 2)}
-  `;
+  const data = {
+    request: `${request.method}`,
+    url: `${request.originalUrl}`,
+    headers: `${JSON.stringify(headers, null, 2)}`,
+    body: `${JSON.stringify(body, null, 2)}`
+  };
 
-  response.status(200).send(responseText);
+  response.status(200).json(data);
 });
 
 routes.notify('/notify', (request, response) => {
