@@ -35,3 +35,5 @@ But there are other methods that can be used, these are:
 * **PATCH**: The PATCH method is used to apply partial modifications to a resource. It's typically used when you want to apply only a part of the modifications supported by PUT.
 
 * **OPTIONS**: This method is used to describe the communication options for the target resource. It allows the client to determine the communication options available for a particular resource or the server as a whole.
+
+* **HEAD**: Similar to GET, but it only requests the headers of the resource without the body. It's often used to check for the existence of a resource or to retrieve metadata about it.
