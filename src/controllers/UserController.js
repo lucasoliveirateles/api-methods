@@ -6,6 +6,14 @@ class UserController {
     
     return response.json(axios.data);
   }
+
+  async post(request, response) {
+    const data = request.body;
+  
+    const axios = await api.post('/data', data);
+  
+    return response.status(200).json(axios.data);
+  }
 }
 
 export default new UserController();

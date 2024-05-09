@@ -12,14 +12,7 @@ let users = [
 ];
 
 routes.get('/users', UserController.get);
-
-routes.post('/users', (request, response) => {
-  const data = request.body;
-  
-  users.push(data);
-  
-  response.status(200).json(data);
-});
+routes.post('/users', UserController.post);
 
 routes.put('/users/:id', (request, response) => {
   const id = parseInt(request.params.id);
