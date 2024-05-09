@@ -1,6 +1,8 @@
 import fs from 'fs';
 import { Router } from 'express';
 
+import UserController from '../controllers/UserController.js';
+
 const routes = new Router();
 
 let users = [
@@ -9,9 +11,7 @@ let users = [
   { id: 3, name: 'Charlie' }
 ];
 
-routes.get('/users', (request, response) => {
-  response.json(users);
-});
+routes.get('/users', UserController.get);
 
 routes.post('/users', (request, response) => {
   const data = request.body;
