@@ -5,31 +5,11 @@ import UserController from '../controllers/UserController.js';
 
 const routes = new Router();
 
-let users = [
-  { id: 1, name: 'Alice' },
-  { id: 2, name: 'Bob' },
-  { id: 3, name: 'Charlie' }
-];
-
 routes.get('/users', UserController.get);
 routes.post('/users', UserController.post);
 routes.put('/users/:id', UserController.put);
 routes.delete('/users/:id', UserController.delete);
-
-routes.patch('/users/:id', (request, response) => {
-  const id = parseInt(request.params.id);
-  const updateFields = request.body;
-
-  const index = users.findIndex(user => user.id === id);
-  
-  if (index !== -1) {
-    users[index] = { ...users[index], ...updateFields };
-
-    response.status(200).json(users);
-  } else {
-    response.status(404).json({ message: 'user not found' });
-  }
-});
+routes.patch('/users/:id', UserController.patch);
 
 routes.options('/http', (request, response) => {
   response.setHeader(

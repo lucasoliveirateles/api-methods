@@ -45,6 +45,26 @@ class UserController {
     
     response.status(204).send();
   }
+
+  async patch(request, response) {
+    const id = request.params.id;
+    const data = request.body;
+
+    const axios = await api.get('/data');
+
+    const users = axios.data;
+
+    const index = users.findIndex(user => user.id === id);
+    
+    if (index !== -1) {
+      users[index] = { ...users[index], ...data };
+
+      response.status(200).json(users);
+    } else {
+      response.status(404).json({ message: 'user not found' });
+    }
+  }
+
 }
 
 export default new UserController();
