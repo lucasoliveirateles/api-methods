@@ -13,21 +13,7 @@ let users = [
 
 routes.get('/users', UserController.get);
 routes.post('/users', UserController.post);
-
-routes.put('/users/:id', (request, response) => {
-  const id = parseInt(request.params.id);
-  const data = request.body;
-  
-  const index = users.findIndex(user => user.id === id);
-  
-  if (index !== -1) {
-    users[index] = { ...users[index], ...data };
-
-    response.status(200).json(users);
-  } else {
-    response.status(404).json({ message: 'user not found' });
-  }
-});
+routes.put('/users/:id', UserController.put);
 
 routes.delete('/users/:id', (request, response) => {
   const id = parseInt(request.params.id);
