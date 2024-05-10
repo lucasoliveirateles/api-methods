@@ -2,6 +2,7 @@ import fs from 'fs';
 import { Router } from 'express';
 
 import UserController from '../controllers/UserController.js';
+import HttpController from '../controllers/HttpController.js';
 
 const routes = new Router();
 
@@ -11,15 +12,7 @@ routes.put('/users/:id', UserController.put);
 routes.delete('/users/:id', UserController.delete);
 routes.patch('/users/:id', UserController.patch);
 
-routes.options('/http', (request, response) => {
-  response.setHeader(
-    'Allow', 'GET, POST, PUT, DELETE, PATCH, COPY, HEAD, PROPPATCH, LOCK, UNLOCK, REPORT, PROPFIND, MKCOL, MKACTIVITY, CHECKOUT, MOVE, MERGE, TRACE, NOTIFY' 
-  );
-  
-  response.setHeader('Access-Control-Allow-Origin', '*');
-
-  response.status(204).send();
-});
+routes.options('/http', HttpController.options);
 
 let resource = 'Original content';
 
