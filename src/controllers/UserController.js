@@ -33,6 +33,18 @@ class UserController {
       response.status(404).json({ message: 'user not found' });
     }
   }
+
+  async delete(request, response) {
+    const id = request.params.id;
+
+    const axios = await api.get('/data');
+
+    const users = axios.data;
+  
+    users = users.filter(user => user.id !== id);
+    
+    response.status(204).send();
+  }
 }
 
 export default new UserController();

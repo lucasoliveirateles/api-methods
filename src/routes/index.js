@@ -14,14 +14,7 @@ let users = [
 routes.get('/users', UserController.get);
 routes.post('/users', UserController.post);
 routes.put('/users/:id', UserController.put);
-
-routes.delete('/users/:id', (request, response) => {
-  const id = parseInt(request.params.id);
-  
-  users = users.filter(user => user.id !== id);
-  
-  response.status(204).send();
-});
+routes.delete('/users/:id', UserController.delete);
 
 routes.patch('/users/:id', (request, response) => {
   const id = parseInt(request.params.id);
