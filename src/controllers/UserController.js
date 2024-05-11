@@ -7,7 +7,7 @@ class UserController {
     
       return response.status(200).json(axios.data);  
     } catch (error) {
-      return response.status(500).json({ server: 'error' }); 
+      return response.status(500).json({ message: 'server error' }); 
     }
   }
 
@@ -19,7 +19,7 @@ class UserController {
     
       return response.status(200).json(axios.data); 
     } catch (error) {
-      return response.status(500).json({ server: 'error' }); 
+      return response.status(500).json({ message: 'server error' }); 
     }
   }
 
@@ -29,14 +29,12 @@ class UserController {
   
     const axios = await api.get('/data');
 
-    const users = axios.data;
-
-    const index = users.findIndex(user => user.id === id);
+    const index = axios.data.findIndex(user => user.id === id);
   
     if (index !== -1) {
-      users[index] = { ...users[index], ...data };
+      const axios = await api.put(`/data/${id}`, data);
 
-      response.status(200).json(users);
+      response.status(200).json(axios.data);
     } else {
       response.status(404).json({ message: 'user not found' });
     }
