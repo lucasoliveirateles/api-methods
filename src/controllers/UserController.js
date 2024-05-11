@@ -5,18 +5,22 @@ class UserController {
     try {
       const axios = await api.get('/data');
     
-      return response.json(axios.data);  
+      return response.status(200).json(axios.data);  
     } catch (error) {
       return response.status(500).json({ server: 'error' }); 
     }
   }
 
   async post(request, response) {
-    const data = request.body;
+    try {
+      const data = request.body;
   
-    const axios = await api.post('/data', data);
-  
-    return response.status(200).json(axios.data);
+      const axios = await api.post('/data', data);
+    
+      return response.status(200).json(axios.data); 
+    } catch (error) {
+      return response.status(500).json({ server: 'error' }); 
+    }
   }
 
   async put(request, response) {
