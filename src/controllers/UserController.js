@@ -41,15 +41,24 @@ class UserController {
   }
 
   async delete(request, response) {
-    const id = request.params.id;
+    try {
+      const id = request.params.id;
 
-    const axios = await api.get('/data');
-
-    const users = axios.data;
+      const axios = await api.get('/data');
+      
+      const user = axios.data.filter(user => user.id !== id);
   
-    users = users.filter(user => user.id !== id);
-    
-    response.status(204).send();
+      if (user) {
+        await api.delete(`/data/${id}`);
+
+        return response.status(204).send(); 
+      }
+     
+      throw new Error();
+      
+    } catch (error) {
+      return response.status(404).json({ message: 'user not found' });
+    }
   }
 
   async patch(request, response) {
