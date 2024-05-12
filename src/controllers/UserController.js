@@ -62,24 +62,25 @@ class UserController {
   }
 
   async patch(request, response) {
-    const id = request.params.id;
-    const data = request.body;
+    try {
+      const id = request.params.id;
+      const data = request.body;
 
-    const axios = await api.get('/data');
+      const axios = await api.get('/data');
+      
+      const user = axios.data.filter(user => user.id !== id);
+  
+      if (user) {
+        await api.patch(`/data/${id}`, data);
 
-    const users = axios.data;
-
-    const index = users.findIndex(user => user.id === id);
-    
-    if (index !== -1) {
-      users[index] = { ...users[index], ...data };
-
-      response.status(200).json(users);
-    } else {
-      response.status(404).json({ message: 'user not found' });
+        return response.status(204).send(); 
+      }
+     
+      throw new Error();
+    } catch (error) {
+      return response.status(404).json({ message: 'user not found' });
     }
   }
-
 }
 
 export default new UserController();
