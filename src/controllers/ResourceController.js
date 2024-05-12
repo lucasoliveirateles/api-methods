@@ -20,6 +20,20 @@ class ResourceController {
       return response.status(500).json({ message: 'server error' });
     }
   }
+
+  async proppatch(request, response) {
+    try {
+      const { name, description } = request.body;
+
+      if (name && description) {
+        const axios = await api.proppatch('/resource', { name, description });
+      
+        return response.status(200).json(axios.data);
+      }
+    } catch (error) {
+      return response.status(500).json({ message: 'server error' });
+    }
+  }
 }
 
 export default new ResourceController();

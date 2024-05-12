@@ -14,6 +14,7 @@ routes.delete('/users/:id', UserController.delete);
 routes.patch('/users/:id', UserController.patch);
 routes.options('/http', HttpController.options);
 routes.propfind('/resource', ResourceController.propfind);
+routes.proppatch('/resource', ResourceController.proppatch);
 
 let resource = 'Original content';
 
@@ -39,20 +40,6 @@ routes.head('/resource', (request, response) => {
 
   response.writeHead(200, headers);
   response.end();
-});
-
-let resourceProperties = {
-  name: 'Sample Resource',
-  description: 'This is a sample resource for demonstration purposes.'
-};
-
-routes.proppatch('/resource', (request, response) => {
-  const { name, description } = request.body;
-
-  if (name) resourceProperties.name = name;
-  if (description) resourceProperties.description = description;
-
-  response.status(200).json(resourceProperties);
 });
 
 const resourceLocks = new Map();
