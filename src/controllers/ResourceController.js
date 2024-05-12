@@ -1,4 +1,17 @@
 class ResourceController {
+  async head(request, response) {
+    const axios = await api.get('/resource'); 
+   
+    const headers = {
+      'Content-Type': 'application/json',
+      'Content-Length': JSON.stringify(axios.data).length
+    };
+  
+    response.writeHead(200, headers);
+    
+    response.end();
+  }
+  
   async propfind(request, response) {
     try {
       const { properties } = request.body;

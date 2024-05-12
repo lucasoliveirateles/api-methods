@@ -15,6 +15,7 @@ routes.patch('/users/:id', UserController.patch);
 routes.options('/http', HttpController.options);
 routes.propfind('/resource', ResourceController.propfind);
 routes.proppatch('/resource', ResourceController.proppatch);
+routes.head('/resource', ResourceController.head);
 
 let resource = 'Original content';
 
@@ -24,22 +25,6 @@ routes.copy('/resource', (request, response) => {
   response.status(200).json({ 
     message: `resource copied successfully: ${copiedResource}`
   });
-});
-
-const resourceData = {
-  id: 1,
-  name: 'Example Resource',
-  description: 'This is a sample resource for demonstration purposes.'
-};
-
-routes.head('/resource', (request, response) => {
-  const headers = {
-    'Content-Type': 'application/json',
-    'Content-Length': JSON.stringify(resourceData).length
-  };
-
-  response.writeHead(200, headers);
-  response.end();
 });
 
 const resourceLocks = new Map();
