@@ -3,6 +3,7 @@ import { Router } from 'express';
 
 import UserController from '../controllers/UserController.js';
 import HttpController from '../controllers/HttpController.js';
+import ResourceController from '../controllers/ResourceController.js';
 
 const routes = new Router();
 
@@ -11,8 +12,8 @@ routes.post('/users', UserController.post);
 routes.put('/users/:id', UserController.put);
 routes.delete('/users/:id', UserController.delete);
 routes.patch('/users/:id', UserController.patch);
-
 routes.options('/http', HttpController.options);
+routes.propfind('/resource', ResourceController.propfind);
 
 let resource = 'Original content';
 
@@ -44,20 +45,6 @@ let resourceProperties = {
   name: 'Sample Resource',
   description: 'This is a sample resource for demonstration purposes.'
 };
-
-routes.propfind('/resource', (request, response) => {
-  const { properties } = request.body;
-
-  const requestedProperties = {};
-
-  properties.forEach(property => {
-    if (resourceProperties[property]) {
-      requestedProperties[property] = resourceProperties[property];
-    }
-  });
-
-  response.status(200).json(requestedProperties);
-});
 
 routes.proppatch('/resource', (request, response) => {
   const { name, description } = request.body;

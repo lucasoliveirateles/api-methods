@@ -12,5 +12,11 @@
       "id": 3, 
       "name": "Charlie" 
     }
+  ],
+  "resource": [
+    {
+      "name": "Sample Resource",
+      "description": "This is a sample resource for demonstration purposes."
+    }
   ]
 }
