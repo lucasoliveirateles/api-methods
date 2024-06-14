@@ -20,6 +20,20 @@ HTTP methods, also known as HTTP verbs, are a set of standardized actions that d
 -> npm run start
 ```
 
+#### Create .env file
+```
+-> cp env-example .env
+```
+
+#### Define variables
+
+Example
+
+```
+PORT=3000
+API_URL=http://localhost:3000
+```
+
 Here's a description of some commonly used HTTP methods:
  
 * **GET**: The GET method is used to retrieve data from a specified resource on the server. It is primarily intended for read-only operations, where the client requests information without causing any modification to the server's state. GET requests are idempotent, meaning multiple identical requests produce the same result as a single request.
