@@ -18,6 +18,7 @@ routes.proppatch('/resource', ResourceController.proppatch);
 routes.head('/resource', ResourceController.head);
 routes.notify('/notify', ResourceController.notify);
 routes.report('/resource', ResourceController.report);
+routes.lock('/resource', ResourceController.lock);
 
 let resource = 'Original content';
 
@@ -27,20 +28,6 @@ routes.copy('/resource', (request, response) => {
   response.status(200).json({ 
     message: `resource copied successfully: ${copiedResource}`
   });
-});
-
-const resourceLocks = new Map();
-
-routes.lock('/resource', (request, response) => {
-  const { resource, owner } = request.body;
-
-  if (resourceLocks.has(resource)) {
-    response.status(409).json({ message: 'resource is already locked'});
-  } else {
-    resourceLocks.set(resource, { owner });
-
-    response.status(200).json({ message: 'resource locked successfully'});
-  }
 });
 
 const resourceLocks2 = new Map();
