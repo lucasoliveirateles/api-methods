@@ -17,6 +17,7 @@ routes.propfind('/resource', ResourceController.propfind);
 routes.proppatch('/resource', ResourceController.proppatch);
 routes.head('/resource', ResourceController.head);
 routes.notify('/notify', ResourceController.notify);
+routes.report('/resource', ResourceController.report);
 
 let resource = 'Original content';
 
@@ -54,19 +55,6 @@ routes.unlock('/resource', (request, response) => {
 
     response.status(200).json({ message: 'resource unlocked successfully' });
   }
-});
-
-routes.report('/resource', (request, response) => {
-  const data = {
-    resource: '/resource',
-    reportType: 'Example Report',
-    data: {
-      totalItems: 10,
-      averageSize: '1 MB',
-    }
-  };
-
-  response.status(200).json(data);
 });
 
 routes.mkcol('/collection', async (request, response) => {

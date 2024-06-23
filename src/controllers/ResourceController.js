@@ -61,6 +61,23 @@ class ResourceController {
       return response.status(500).json({ message: 'server error' });
     }  
   }
+
+  report(request, response) {
+    try {
+      const data = {
+        resource: '/resource',
+        reportType: 'Example Report',
+        data: {
+          totalItems: 10,
+          averageSize: '1 MB',
+        }
+      };
+      
+      response.status(200).json(data);
+    } catch (error) {
+      return response.status(500).json({ message: 'server error' });
+    }
+  }
 }
 
 export default new ResourceController();
