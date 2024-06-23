@@ -1,4 +1,4 @@
-class NotificationModel extends Model {
+class NotificationModel {
   static sendNotification(message) {
     console.log(message)
   }

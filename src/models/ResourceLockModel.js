@@ -1,4 +1,4 @@
-class ResourceLockModel extends Model {
+class ResourceLockModel {
   static getResource() {
     return new Map();
   }
