@@ -16,6 +16,7 @@ routes.options('/http', HttpController.options);
 routes.propfind('/resource', ResourceController.propfind);
 routes.proppatch('/resource', ResourceController.proppatch);
 routes.head('/resource', ResourceController.head);
+routes.notify('/notify', ResourceController.notify);
 
 let resource = 'Original content';
 
@@ -182,18 +183,6 @@ routes.trace('/trace', (request, response) => {
 
   response.status(200).json(data);
 });
-
-routes.notify('/notify', (request, response) => {
-  const { message } = request.body;
-
-  sendNotificationToClient(message);
-
-  response.status(200).json({ message: 'notification sent' });
-});
-
-function sendNotificationToClient(message) {
-  console.log('Sending notification:', message);
-}
 
 routes.link('/posts/:postId/tags/:tagId', (request, response) => {
   const postId = request.params.postId;

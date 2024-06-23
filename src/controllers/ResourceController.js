@@ -1,3 +1,5 @@
+import NotificationModel from '../models/NotificationModel.js';
+
 class ResourceController {
   async head(request, response) {
     const axios = await api.get('/resource'); 
@@ -46,6 +48,18 @@ class ResourceController {
     } catch (error) {
       return response.status(500).json({ message: 'server error' });
     }
+  }
+
+  notify(request, response) {
+    try {
+      const { message } = request.body;
+
+      NotificationModel.sendNotification(message);
+
+      response.status(200).json({ message: 'notification sent' });
+    } catch (error) {
+      return response.status(500).json({ message: 'server error' });
+    }  
   }
 }
 
