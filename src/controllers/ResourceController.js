@@ -115,6 +115,20 @@ class ResourceController {
       return response.status(500).json({ message: 'server error' });
     }
   }
+
+  copy(request, response) {
+    try {
+      const { resource } = request.body;
+
+      const copiedResource = resource;
+
+      return response.status(200).json({ 
+        message: `resource copied successfully: ${copiedResource}`
+      }); 
+    } catch (error) {
+      return response.status(500).json({ message: 'server error' });
+    }
+  }
 }
 
 export default new ResourceController();

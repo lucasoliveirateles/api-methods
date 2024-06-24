@@ -20,16 +20,7 @@ routes.notify('/notify', ResourceController.notify);
 routes.report('/resource', ResourceController.report);
 routes.lock('/resource', ResourceController.lock);
 routes.unlock('/resource', ResourceController.unlock);
-
-let resource = 'Original content';
-
-routes.copy('/resource', (request, response) => {
-  const copiedResource = resource;
-
-  response.status(200).json({ 
-    message: `resource copied successfully: ${copiedResource}`
-  });
-});
+routes.copy('/resource', ResourceController.copy);
 
 routes.mkcol('/collection', async (request, response) => {
   try {
