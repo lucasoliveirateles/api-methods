@@ -81,17 +81,21 @@ class ResourceController {
   }
 
   lock(request, response) {
-    const { resource, owner } = request.body;
+    try {
+      const { resource, owner } = request.body;
 
-    const resourceLocks = ResourceLockModel.getResource();
+      const resourceLocks = ResourceLockModel.getResource();
 
-    if (resourceLocks.has(resource)) {
-      response.status(409).json({ message: 'resource is already locked'});
-    } else {
-      resourceLocks.set(resource, { owner });
+      if (resourceLocks.has(resource)) {
+        response.status(409).json({ message: 'resource is already locked'});
+      } else {
+        resourceLocks.set(resource, { owner });
 
-      response.status(200).json({ message: 'resource locked successfully'});
-    } 
+        response.status(200).json({ message: 'resource locked successfully'});
+      } 
+    } catch (error) {
+      return response.status(500).json({ message: 'server error' });
+    }
   }
 
   unlock(request, response) {
