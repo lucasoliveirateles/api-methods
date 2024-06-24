@@ -129,6 +129,24 @@ class ResourceController {
       return response.status(500).json({ message: 'server error' });
     }
   }
+
+  trace(request, response) {
+    try {
+      const headers = request.headers;
+      const body = request.body;
+
+      const data = {
+        request: `${request.method}`,
+        url: `${request.originalUrl}`,
+        headers: `${JSON.stringify(headers, null, 2)}`,
+        body: `${JSON.stringify(body, null, 2)}`
+      };
+
+      return response.status(200).json(data);
+    } catch (error) {
+      return response.status(500).json({ message: 'server error' });
+    }
+  }
 }
 
 export default new ResourceController();

@@ -21,6 +21,7 @@ routes.report('/resource', ResourceController.report);
 routes.lock('/resource', ResourceController.lock);
 routes.unlock('/resource', ResourceController.unlock);
 routes.copy('/resource', ResourceController.copy);
+routes.trace('/trace', ResourceController.trace);
 
 routes.mkcol('/collection', async (request, response) => {
   try {
@@ -122,20 +123,6 @@ function applyChanges(resource, changes) {
     }
   });
 }
-
-routes.trace('/trace', (request, response) => {
-  const headers = request.headers;
-  const body = request.body;
-
-  const data = {
-    request: `${request.method}`,
-    url: `${request.originalUrl}`,
-    headers: `${JSON.stringify(headers, null, 2)}`,
-    body: `${JSON.stringify(body, null, 2)}`
-  };
-
-  response.status(200).json(data);
-});
 
 routes.link('/posts/:postId/tags/:tagId', (request, response) => {
   const postId = request.params.postId;
