@@ -93,6 +93,24 @@ class ResourceController {
       response.status(200).json({ message: 'resource locked successfully'});
     } 
   }
+
+  unlock(request, response) {
+    try {
+      const { resource } = request.body;
+
+      const resourceLocks = ResourceLockModel.getResource();
+
+      if (!resourceLocks.has(resource)) {
+        response.status(409).json({ message: 'resource is not locked' });
+      } else {
+        resourceLocks.delete(resource);
+    
+        response.status(200).json({ message: 'resource unlocked successfully' });
+      } 
+    } catch (error) {
+      return response.status(500).json({ message: 'server error' });
+    }
+  }
 }
 
 export default new ResourceController();

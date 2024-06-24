@@ -19,6 +19,7 @@ routes.head('/resource', ResourceController.head);
 routes.notify('/notify', ResourceController.notify);
 routes.report('/resource', ResourceController.report);
 routes.lock('/resource', ResourceController.lock);
+routes.unlock('/resource', ResourceController.unlock);
 
 let resource = 'Original content';
 
@@ -28,20 +29,6 @@ routes.copy('/resource', (request, response) => {
   response.status(200).json({ 
     message: `resource copied successfully: ${copiedResource}`
   });
-});
-
-const resourceLocks2 = new Map();
-
-routes.unlock('/resource', (request, response) => {
-  const { resource } = request.body;
-
-  if (!resourceLocks2.has(resource)) {
-    response.status(409).json({ message: 'resource is not locked' });
-  } else {
-    resourceLocks2.delete(resource);
-
-    response.status(200).json({ message: 'resource unlocked successfully' });
-  }
 });
 
 routes.mkcol('/collection', async (request, response) => {
